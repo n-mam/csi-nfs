@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.19)
+
+project(csi-nfs)
+
+find_package(gRPC REQUIRED)
+find_package(Protobuf REQUIRED)
+
+add_executable(
+  server
+  main.cpp
+)
+
+protobuf_generate(
+ LANGUAGE cpp
+ TARGET server 
+ PROTOS csi.proto
+ IMPORT_DIRS "D:/vcpkg/installed/x64-windows/include"
+)

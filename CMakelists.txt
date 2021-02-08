@@ -10,6 +10,8 @@ add_definitions(-D _WIN32_WINNT=0x0600)
 add_executable(
   server
   server.cpp
+  csi.pb.cc
+  csi.grpc.pb.cc 
 )
 
 target_include_directories(

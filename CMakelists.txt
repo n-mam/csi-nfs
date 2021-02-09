@@ -21,6 +21,8 @@ target_include_directories(
   ${CMAKE_SOURCE_DIR}/build
 )
 
+target_link_libraries(server Ws2_32.lib)
+
 set(VCPKG_ROOT D:/vcpkg/installed/x64-windows)
 set(PROTOC ${VCPKG_ROOT}/tools/protobuf/protoc.exe)
 

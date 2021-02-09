@@ -7,11 +7,28 @@ find_package(Protobuf REQUIRED)
 
 add_definitions(-D _WIN32_WINNT=0x0600)
 
+# Protbuf generated
+
+set(VCPKG_ROOT D:/vcpkg/installed/x64-windows)
+set(PROTOC ${VCPKG_ROOT}/tools/protobuf/protoc.exe)
+
+add_custom_command(
+  OUTPUT csi.pb.cc
+  COMMAND ${PROTOC} --cpp_out=${CMAKE_SOURCE_DIR}/build -I=${CMAKE_SOURCE_DIR} -I=${VCPKG_ROOT}/include ${CMAKE_SOURCE_DIR}/csi.proto
+)
+
+add_custom_command(
+  OUTPUT csi.grpc.pb.cc
+  COMMAND ${PROTOC} --grpc_out=${CMAKE_SOURCE_DIR}/build --plugin=protoc-gen-grpc="${VCPKG_ROOT}/tools/grpc/grpc_cpp_plugin.exe" -I=${CMAKE_SOURCE_DIR} -I=${VCPKG_ROOT}/include ${CMAKE_SOURCE_DIR}/csi.proto
+)
+
+# Main server
+
 add_executable(
   server
   server.cpp
   csi.pb.cc
-  csi.grpc.pb.cc 
+  csi.grpc.pb.cc
 )
 
 target_include_directories(
@@ -22,18 +39,3 @@ target_include_directories(
 )
 
 target_link_libraries(server Ws2_32.lib)
-
-set(VCPKG_ROOT D:/vcpkg/installed/x64-windows)
-set(PROTOC ${VCPKG_ROOT}/tools/protobuf/protoc.exe)
-
-add_custom_command(
-  TARGET server
-  PRE_BUILD
-  COMMAND ${PROTOC} --cpp_out=${CMAKE_SOURCE_DIR}/build -I=${CMAKE_SOURCE_DIR} -I=${VCPKG_ROOT}/include ${CMAKE_SOURCE_DIR}/csi.proto
-)
-
-add_custom_command(
-  TARGET server
-  PRE_BUILD
-  COMMAND ${PROTOC} --grpc_out=${CMAKE_SOURCE_DIR}/build --plugin=protoc-gen-grpc="${VCPKG_ROOT}/tools/grpc/grpc_cpp_plugin.exe" -I=${CMAKE_SOURCE_DIR} -I=${VCPKG_ROOT}/include ${CMAKE_SOURCE_DIR}/csi.proto
-)

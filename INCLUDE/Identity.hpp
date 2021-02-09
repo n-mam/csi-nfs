@@ -13,7 +13,9 @@ class IdentityService : public csi::v1::Identity::Service
       const csi::v1::GetPluginInfoRequest *request, 
       csi::v1::GetPluginInfoResponse *response) override
     {
-      return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "GetPluginInfo");
+      response->set_name("nfs.csi.msystechnologies.com");
+      response->set_vendor_version("0.1");
+      return grpc::Status(grpc::StatusCode::OK, "GetPluginInfo");
     }
 
     virtual grpc::Status GetPluginCapabilities(
@@ -31,7 +33,12 @@ class IdentityService : public csi::v1::Identity::Service
     {
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "Probe");
     }
+  
+  protected:
 
+    std::string iName;
+
+    std::string iVersion;
 };
 
 

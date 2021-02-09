@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.19)
 
 project(csi-nfs)
 
+# SET CMAKE_PREFIX_PATH=d:\vcpkg\installed\x64-windows
+
 find_package(gRPC REQUIRED)
 find_package(Protobuf REQUIRED)
 
@@ -26,7 +28,7 @@ add_custom_command(
 
 add_executable(
   server
-  server.cpp
+  Main.cpp
   csi.pb.cc
   csi.grpc.pb.cc
 )
@@ -39,3 +41,37 @@ target_include_directories(
 )
 
 target_link_libraries(server Ws2_32.lib)
+
+# Test client
+
+add_executable(
+  Test
+  test.cpp
+  csi.pb.cc
+  csi.grpc.pb.cc
+)
+
+target_include_directories(
+  Test
+  PRIVATE
+  ${CMAKE_SOURCE_DIR}/INCLUDE
+  ${CMAKE_SOURCE_DIR}/build
+)
+
+target_link_libraries(Test Ws2_32.lib)
+
+if (WIN32)
+  SET (CMAKE_CXX_FLAGS_RELEASE "/Zi /Od")
+  SET_TARGET_PROPERTIES(
+   server PROPERTIES LINK_FLAGS 
+   "/DEBUG /OPT:REF /OPT:ICF"
+  )
+endif (WIN32)
+
+if (WIN32)
+  SET (CMAKE_CXX_FLAGS_RELEASE "/Zi /Od")
+  SET_TARGET_PROPERTIES(
+   Test PROPERTIES LINK_FLAGS 
+   "/DEBUG /OPT:REF /OPT:ICF"
+  )
+endif (WIN32)

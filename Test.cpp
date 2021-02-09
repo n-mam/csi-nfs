@@ -13,12 +13,31 @@ class IdentityClient
      IdentityClient(std::shared_ptr<grpc_impl::Channel> channel)
        : iStub(csi::v1::Identity::NewStub(channel))
      {
-
      }
 
-     void Test(void)
+     void Probe()
      {
        grpc::ClientContext context;
+
+       csi::v1::ProbeRequest req;
+       csi::v1::ProbeResponse res;
+
+       auto status = iStub->Probe(&context, req, &res);
+
+       if (status.ok())
+       {
+         std::cout << "ready : " << res.ready().value() << "\n";
+       }
+       else
+       {
+         std::cout << "Probe failed : " << status.error_message() << "\n";
+       }
+     }
+
+     void GetPluginInfo(void)
+     {
+       grpc::ClientContext context;
+
        csi::v1::GetPluginInfoRequest req;
        csi::v1::GetPluginInfoResponse res;
 
@@ -30,7 +49,7 @@ class IdentityClient
        }
        else
        {
-         std::cout << "GetPluginInfo failed\n";
+         std::cout << "GetPluginInfo failed : " << status.error_message() << "\n";
        }
      }
 
@@ -45,7 +64,8 @@ int main(int argc, char *argv[])
 
   IdentityClient idc(channel);
 
-  idc.Test();
+  idc.Probe();
+  idc.GetPluginInfo();
 
   return 0;
 }

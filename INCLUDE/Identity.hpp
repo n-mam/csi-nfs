@@ -8,9 +8,14 @@ class IdentityService : public csi::v1::Identity::Service
 {
   public:
 
+    IdentityService()
+    {
+      iReady = true;
+    }
+
     virtual grpc::Status GetPluginInfo(
-      grpc::ServerContext *context, 
-      const csi::v1::GetPluginInfoRequest *request, 
+      grpc::ServerContext *context,
+      const csi::v1::GetPluginInfoRequest *request,
       csi::v1::GetPluginInfoResponse *response) override
     {
       response->set_name("nfs.csi.msystechnologies.com");
@@ -27,14 +32,19 @@ class IdentityService : public csi::v1::Identity::Service
     }
 
     virtual grpc::Status Probe(
-      grpc::ServerContext *context, 
-      const csi::v1::ProbeRequest *request, 
+      grpc::ServerContext *context,
+      const csi::v1::ProbeRequest *request,
       csi::v1::ProbeResponse *response) override
     {
-      return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "Probe");
+      google::protobuf::BoolValue *ready = (google::protobuf::BoolValue()).New();
+      ready->set_value(iReady);
+      response->set_allocated_ready(ready);
+      return grpc::Status(grpc::StatusCode::OK, "Probe");
     }
   
   protected:
+
+    bool iReady = false;
 
     std::string iName;
 

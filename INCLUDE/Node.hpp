@@ -4,6 +4,8 @@
 #include <csi.pb.h>
 #include <csi.grpc.pb.h>
 
+#include <iostream>
+
 class NodeService : public csi::v1::Node::Service
 {
   public:
@@ -13,6 +15,7 @@ class NodeService : public csi::v1::Node::Service
       const csi::v1::NodeStageVolumeRequest *request,
       csi::v1::NodeStageVolumeResponse *response) override
     {
+      std::cout << "IdentityService [NodeStageVolume]\n";
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "NodeStageVolume");
     }
 
@@ -21,6 +24,7 @@ class NodeService : public csi::v1::Node::Service
       const csi::v1::NodeUnstageVolumeRequest *request,
       csi::v1::NodeUnstageVolumeResponse *response) override
     {
+      std::cout << "IdentityService [NodeUnstageVolume]\n";
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "NodeUnstageVolume");
     }
 
@@ -29,6 +33,7 @@ class NodeService : public csi::v1::Node::Service
       const csi::v1::NodePublishVolumeRequest *request,
       csi::v1::NodePublishVolumeResponse *response) override
     {
+      std::cout << "IdentityService [NodePublishVolume]\n";
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "NodePublishVolume");
     }
 
@@ -37,6 +42,7 @@ class NodeService : public csi::v1::Node::Service
       const csi::v1::NodeUnpublishVolumeRequest *request,
       csi::v1::NodeUnpublishVolumeResponse *response) override
     {
+      std::cout << "IdentityService [NodeUnpublishVolume]\n";
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "NodeUnpublishVolume");
     }
 
@@ -45,6 +51,7 @@ class NodeService : public csi::v1::Node::Service
       const csi::v1::NodeGetVolumeStatsRequest *request,
       csi::v1::NodeGetVolumeStatsResponse *response) override
     {
+      std::cout << "IdentityService [NodeGetVolumeStats]\n";
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "NodeGetVolumeStats");
     }
 
@@ -53,6 +60,7 @@ class NodeService : public csi::v1::Node::Service
       const csi::v1::NodeExpandVolumeRequest *request,
       csi::v1::NodeExpandVolumeResponse *response) override
     {
+      std::cout << "IdentityService [NodeExpandVolume]\n";
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "NodeExpandVolume");
     }
 
@@ -61,6 +69,7 @@ class NodeService : public csi::v1::Node::Service
       const csi::v1::NodeGetCapabilitiesRequest *request,
       csi::v1::NodeGetCapabilitiesResponse *response) override
     {
+      std::cout << "IdentityService [NodeGetCapabilities]\n";
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "NodeGetCapabilities");
     }
 
@@ -69,6 +78,7 @@ class NodeService : public csi::v1::Node::Service
       const csi::v1::NodeGetInfoRequest *request,
       csi::v1::NodeGetInfoResponse *response) override
     {
+      std::cout << "IdentityService [NodeGetInfo]\n";
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "NodeGetInfo");
     }
 };

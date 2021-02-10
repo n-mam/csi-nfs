@@ -1,5 +1,6 @@
 #include <Node.hpp>
 #include <Identity.hpp>
+#include <Controller.hpp>
 
 #include <grpcpp/server_builder.h>
 
@@ -13,9 +14,11 @@ int main(int argc, char *argv[])
 
   NodeService ns;
   IdentityService is;
+  ControllerService cs;
 
   builder.RegisterService(&is);
   builder.RegisterService(&ns);
+  builder.RegisterService(&cs);
 
   std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
 

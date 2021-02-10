@@ -15,25 +15,6 @@ class IdentityClient
      {
      }
 
-     void Probe()
-     {
-       grpc::ClientContext context;
-
-       csi::v1::ProbeRequest req;
-       csi::v1::ProbeResponse res;
-
-       auto status = iStub->Probe(&context, req, &res);
-
-       if (status.ok())
-       {
-         std::cout << "ready : " << res.ready().value() << "\n";
-       }
-       else
-       {
-         std::cout << "Probe failed : " << status.error_message() << "\n";
-       }
-     }
-
      void GetPluginInfo(void)
      {
        grpc::ClientContext context;
@@ -53,6 +34,49 @@ class IdentityClient
        }
      }
 
+     void GetPluginCapabilities(void)
+     {
+       grpc::ClientContext context;
+
+       csi::v1::GetPluginCapabilitiesRequest req;
+       csi::v1::GetPluginCapabilitiesResponse res;
+
+       auto status = iStub->GetPluginCapabilities(&context, req, &res);
+
+       if (status.ok())
+       {      
+         for(auto& cap : res.capabilities())
+         {
+           std::cout << "capabilities : "
+                     << "has_service " << cap.has_service() << ", "
+                     << "has_volume_expansion " << cap.has_volume_expansion() << "\n"; 
+         }
+       }
+       else
+       {
+         std::cout << "Probe failed : " << status.error_message() << "\n";
+       }
+     }
+
+     void Probe(void)
+     {
+       grpc::ClientContext context;
+
+       csi::v1::ProbeRequest req;
+       csi::v1::ProbeResponse res;
+
+       auto status = iStub->Probe(&context, req, &res);
+
+       if (status.ok())
+       {
+         std::cout << "ready : " << res.ready().value() << "\n";
+       }
+       else
+       {
+         std::cout << "Probe failed : " << status.error_message() << "\n";
+       }
+     }
+
   protected:
     
     std::unique_ptr<csi::v1::Identity::Stub> iStub;
@@ -66,6 +90,7 @@ int main(int argc, char *argv[])
 
   idc.Probe();
   idc.GetPluginInfo();
+  idc.GetPluginCapabilities();
 
   return 0;
 }

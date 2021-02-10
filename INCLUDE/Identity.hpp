@@ -4,6 +4,8 @@
 #include <csi.pb.h>
 #include <csi.grpc.pb.h>
 
+#include <iostream>
+
 class IdentityService : public csi::v1::Identity::Service
 {
   public:
@@ -18,7 +20,8 @@ class IdentityService : public csi::v1::Identity::Service
       const csi::v1::GetPluginInfoRequest *request,
       csi::v1::GetPluginInfoResponse *response) override
     {
-      response->set_name("nfs.csi.msystechnologies.com");
+      std::cout << "[IdentityService] GetPluginInfo\n";
+      response->set_name("com.msystechnologies.csi.nfs");
       response->set_vendor_version("0.1");
       return grpc::Status(grpc::StatusCode::OK, "GetPluginInfo");
     }
@@ -28,7 +31,10 @@ class IdentityService : public csi::v1::Identity::Service
       const csi::v1::GetPluginCapabilitiesRequest *request,
       csi::v1::GetPluginCapabilitiesResponse *response) override
     {
-      return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "GetPluginCapabilities");
+      std::cout << "[IdentityService] GetPluginCapabilities\n";
+      auto cap = response->add_capabilities();
+      cap->mutable_service()->set_type(csi::v1::PluginCapability_Service_Type_CONTROLLER_SERVICE);
+      return grpc::Status(grpc::StatusCode::OK, "GetPluginCapabilities");
     }
 
     virtual grpc::Status Probe(
@@ -36,9 +42,8 @@ class IdentityService : public csi::v1::Identity::Service
       const csi::v1::ProbeRequest *request,
       csi::v1::ProbeResponse *response) override
     {
-      google::protobuf::BoolValue *ready = (google::protobuf::BoolValue()).New();
-      ready->set_value(iReady);
-      response->set_allocated_ready(ready);
+      std::cout << "[IdentityService] Probe\n";
+      response->mutable_ready()->set_value(iReady);
       return grpc::Status(grpc::StatusCode::OK, "Probe");
     }
   

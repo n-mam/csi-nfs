@@ -46,7 +46,7 @@ target_link_libraries(server Ws2_32.lib)
 
 add_executable(
   Test
-  ${CMAKE_SOURCE_DIR}/test.cpp
+  ${CMAKE_SOURCE_DIR}/Test.cpp
   csi.pb.cc
   csi.grpc.pb.cc
 )

@@ -11,8 +11,13 @@ add_definitions(-D _WIN32_WINNT=0x0600)
 
 # Protbuf generated
 
-set(VCPKG_ROOT D:/vcpkg/installed/x64-windows)
-set(PROTOC ${VCPKG_ROOT}/tools/protobuf/protoc.exe)
+if (WIN32)
+  SET(VCPKG_ROOT D:/vcpkg/installed/x64-windows)
+else()
+  SET(VCPKG_ROOT ~/vcpkg/installed/x64-linux)
+endif (WIN32)
+
+SET(PROTOC ${VCPKG_ROOT}/tools/protobuf/protoc)
 
 add_custom_command(
   OUTPUT csi.pb.cc

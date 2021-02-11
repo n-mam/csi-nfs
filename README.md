@@ -1,6 +1,19 @@
 # csi-nfs
 csi nfs driver
 
+### install grpc
+```sh
+$ git clone https://github.com/microsoft/vcpkg
+$ ./vcpkg/bootstrap-vcpkg.sh
+$ ./vcpkg/vcpkg install grpc
+```
+```sh
+Windows:
+  set SET CMAKE_PREFIX_PATH=d:\vcpkg\installed\x64-windows
+Linux:
+  export CMAKE_PREFIX_PATH=~/vcpkg/installed/x64-linux/
+```
+
 ### Build
 ```sh
 cd c:\csi-nfs

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.0)
 
 project(csi-nfs)
 
@@ -28,7 +28,7 @@ add_custom_command(
 
 add_executable(
   server
-  Main.cpp
+  ${CMAKE_SOURCE_DIR}/Main.cpp
   csi.pb.cc
   csi.grpc.pb.cc
 )
@@ -46,7 +46,7 @@ target_link_libraries(server Ws2_32.lib)
 
 add_executable(
   Test
-  test.cpp
+  ${CMAKE_SOURCE_DIR}/test.cpp
   csi.pb.cc
   csi.grpc.pb.cc
 )

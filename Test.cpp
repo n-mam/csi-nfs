@@ -1,7 +1,7 @@
+#include <grpcpp/grpcpp.h>
+
 #include <csi.pb.h>
 #include <csi.grpc.pb.h>
-
-#include <grpcpp/grpcpp.h>
 
 #include <memory>
 #include <iostream>
@@ -10,7 +10,7 @@ class IdentityClient
 {
   public:
    
-     IdentityClient(std::shared_ptr<grpc_impl::Channel> channel)
+     IdentityClient(std::shared_ptr<::grpc_impl::Channel> channel)
        : iStub(csi::v1::Identity::NewStub(channel))
      {
      }

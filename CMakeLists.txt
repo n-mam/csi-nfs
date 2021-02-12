@@ -7,11 +7,10 @@ project(csi-nfs)
 find_package(gRPC REQUIRED)
 find_package(Protobuf REQUIRED)
 
-add_definitions(-D _WIN32_WINNT=0x0600)
-
 # Protbuf generated
 
 if (WIN32)
+  add_definitions(-D _WIN32_WINNT=0x0600)
   SET(VCPKG_ROOT D:/vcpkg/installed/x64-windows)
   SET(PROTOC ${VCPKG_ROOT}/tools/protobuf/protoc.exe)
   SET(GRPC_PLUGIN ${VCPKG_ROOT}/tools/grpc/grpc_cpp_plugin.exe)
@@ -40,6 +39,8 @@ add_executable(
   csi.grpc.pb.cc
 )
 
+SET_PROPERTY(TARGET server PROPERTY CXX_STANDARD 17)
+
 target_include_directories(
   server
   PRIVATE
@@ -56,6 +57,8 @@ add_executable(
   csi.pb.cc
   csi.grpc.pb.cc
 )
+
+SET_PROPERTY(TARGET Test PROPERTY CXX_STANDARD 17)
 
 target_include_directories(
   Test

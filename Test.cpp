@@ -10,7 +10,7 @@ class IdentityClient
 {
   public:
    
-     IdentityClient(std::shared_ptr<::grpc_impl::Channel> channel)
+     IdentityClient(std::shared_ptr<grpc::Channel> channel)
        : iStub(csi::v1::Identity::NewStub(channel))
      {
      }

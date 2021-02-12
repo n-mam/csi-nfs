@@ -17,7 +17,7 @@ if (WIN32)
   SET(GRPC_PLUGIN ${VCPKG_ROOT}/tools/grpc/grpc_cpp_plugin.exe)
 else()
   SET(VCPKG_ROOT /home/nmam/vcpkg/installed/x64-linux)
-  SET(PROTOC protoc)
+  SET(PROTOC /home/nmam/vcpkg/installed/x64-linux/tools/protobuf/protoc)
   SET(GRPC_PLUGIN /home/nmam/vcpkg/installed/x64-linux/tools/grpc/grpc_cpp_plugin)
 endif (WIN32)
 

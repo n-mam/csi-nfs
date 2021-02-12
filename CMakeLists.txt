@@ -13,13 +13,13 @@ add_definitions(-D _WIN32_WINNT=0x0600)
 
 if (WIN32)
   SET(VCPKG_ROOT D:/vcpkg/installed/x64-windows)
+  SET(PROTOC ${VCPKG_ROOT}/tools/protobuf/protoc.exe)
   SET(GRPC_PLUGIN ${VCPKG_ROOT}/tools/grpc/grpc_cpp_plugin.exe)
 else()
   SET(VCPKG_ROOT ~/vcpkg/installed/x64-linux)
+  SET(PROTOC protoc)
   SET(GRPC_PLUGIN ${VCPKG_ROOT}/tools/grpc/grpc_cpp_plugin)
 endif (WIN32)
-
-SET(PROTOC ${VCPKG_ROOT}/tools/protobuf/protoc)
 
 add_custom_command(
   OUTPUT csi.pb.cc

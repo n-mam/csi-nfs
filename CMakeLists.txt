@@ -43,6 +43,7 @@ add_executable(
 target_include_directories(
   server
   PRIVATE
+  ${VCPKG_ROOT}/include
   ${CMAKE_SOURCE_DIR}/INCLUDE
   ${CMAKE_SOURCE_DIR}/build
 )
@@ -61,6 +62,7 @@ add_executable(
 target_include_directories(
   Test
   PRIVATE
+  ${VCPKG_ROOT}/include
   ${CMAKE_SOURCE_DIR}/INCLUDE
   ${CMAKE_SOURCE_DIR}/build
 )

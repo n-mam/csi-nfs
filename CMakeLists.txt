@@ -69,7 +69,8 @@ if (WIN32)
   target_link_libraries(server Ws2_32.lib)
   target_link_libraries(Test Ws2_32.lib)
 else()
-
+  target_link_libraries(server PRIVATE gRPC::gpr gRPC::grpc gRPC::grpc++ gRPC::grpc++_alts)
+  target_link_libraries(Test PRIVATE gRPC::gpr gRPC::grpc gRPC::grpc++ gRPC::grpc++_alts)
 endif (WIN32)
 
 if (WIN32)

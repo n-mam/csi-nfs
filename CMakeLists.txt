@@ -13,8 +13,10 @@ add_definitions(-D _WIN32_WINNT=0x0600)
 
 if (WIN32)
   SET(VCPKG_ROOT D:/vcpkg/installed/x64-windows)
+  SET(GRPC_PLUGIN ${VCPKG_ROOT}/tools/grpc/grpc_cpp_plugin.exe)
 else()
   SET(VCPKG_ROOT ~/vcpkg/installed/x64-linux)
+  SET(GRPC_PLUGIN ${VCPKG_ROOT}/tools/grpc/grpc_cpp_plugin)
 endif (WIN32)
 
 SET(PROTOC ${VCPKG_ROOT}/tools/protobuf/protoc)
@@ -26,7 +28,7 @@ add_custom_command(
 
 add_custom_command(
   OUTPUT csi.grpc.pb.cc
-  COMMAND ${PROTOC} --grpc_out=${CMAKE_SOURCE_DIR}/build --plugin=protoc-gen-grpc="${VCPKG_ROOT}/tools/grpc/grpc_cpp_plugin.exe" -I=${CMAKE_SOURCE_DIR} -I=${VCPKG_ROOT}/include ${CMAKE_SOURCE_DIR}/csi.proto
+  COMMAND ${PROTOC} --grpc_out=${CMAKE_SOURCE_DIR}/build --plugin=protoc-gen-grpc="${GRPC_PLUGIN}" -I=${CMAKE_SOURCE_DIR} -I=${VCPKG_ROOT}/include ${CMAKE_SOURCE_DIR}/csi.proto
 )
 
 # Main server

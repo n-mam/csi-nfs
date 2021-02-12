@@ -48,8 +48,6 @@ target_include_directories(
   ${CMAKE_SOURCE_DIR}/build
 )
 
-target_link_libraries(server Ws2_32.lib)
-
 # Test client
 
 add_executable(
@@ -67,7 +65,12 @@ target_include_directories(
   ${CMAKE_SOURCE_DIR}/build
 )
 
-target_link_libraries(Test Ws2_32.lib)
+if (WIN32)
+  target_link_libraries(server Ws2_32.lib)
+  target_link_libraries(Test Ws2_32.lib)
+else()
+
+endif (WIN32)
 
 if (WIN32)
   SET (CMAKE_CXX_FLAGS_RELEASE "/Zi /Od")
@@ -75,10 +78,6 @@ if (WIN32)
    server PROPERTIES LINK_FLAGS 
    "/DEBUG /OPT:REF /OPT:ICF"
   )
-endif (WIN32)
-
-if (WIN32)
-  SET (CMAKE_CXX_FLAGS_RELEASE "/Zi /Od")
   SET_TARGET_PROPERTIES(
    Test PROPERTIES LINK_FLAGS 
    "/DEBUG /OPT:REF /OPT:ICF"

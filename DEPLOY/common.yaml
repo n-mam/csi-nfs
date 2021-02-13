@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: msys-ns
+  name: xxx
 
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: msys-sa
-  namespace: msys-ns
+  name: xxx-sa
+  namespace: xxx

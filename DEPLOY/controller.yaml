@@ -1,19 +1,19 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: csi-msys-controller
-  namespace: msys-ns
+  name: xxx-controller-deployment
+  namespace: xxx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: csi-msys-controller
+      app: xxx-controller-app
   template:
     metadata:
       labels:
-        app: csi-msys-controller
+        app: xxx-controller-app
     spec:
-      serviceAccount: msys-sa
+      serviceAccount: xxx-sa
       containers:
         - name: csi-provisioner
           image: k8s.gcr.io/sig-storage/csi-provisioner:v2.0.4

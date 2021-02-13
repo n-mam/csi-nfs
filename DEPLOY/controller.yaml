@@ -1,0 +1,91 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: csi-msys-controller
+  namespace: msys-ns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: csi-msys-controller
+  template:
+    metadata:
+      labels:
+        app: csi-msys-controller
+    spec:
+      serviceAccount: msys-sa
+      containers:
+        - name: csi-provisioner
+          image: k8s.gcr.io/sig-storage/csi-provisioner:v2.0.4
+          args:
+            - "--csi-address=$(ADDRESS)"
+            - "--timeout=60s"
+          env:
+            - name: ADDRESS
+              value: /csi/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            limits:
+              cpu: 50m
+              memory: 48Mi
+            requests:
+              cpu: 2m
+              memory: 20Mi
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+
+        - name: csi-attacher
+          image: k8s.gcr.io/sig-storage/csi-attacher:v3.0.2
+          args:
+            - "--csi-address=$(ADDRESS)"
+            - "--timeout=60s"
+          env:
+            - name: MY_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: ADDRESS
+              value: /csi/csi.sock
+          imagePullPolicy: "IfNotPresent"
+          resources:
+            limits:
+              cpu: 50m
+              memory: 48Mi
+            requests:
+              cpu: 2m
+              memory: 20Mi
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
+
+        # - name: csi-msys
+        #   image: zetanova/hyperv-csi-driver:1.0.16
+        #   #imagePullPolicy: Always
+        #   lifecycle:
+        #     preStop:
+        #       exec:
+        #         command: ["/bin/sh", "-c", "rm -f /csi/hyperv.sock"]
+        #   env:
+        #     - name: DRIVER__TYPE
+        #       value: "Controller"
+        #     - name: DRIVER__USERNAME
+        #       value: "Administrator"
+        #     - name: DRIVER__DefaultStorage
+        #       value: "hv05"
+        #     - name: CSI_ENDPOINT
+        #       value: /csi/hyperv.sock
+        #   resources:
+        #     limits:
+        #       cpu: 150m
+        #       memory: 320Mi
+        #     requests:
+        #       cpu: 5m
+        #       memory: 224Mi
+        #   volumeMounts:
+        #     - name: socket-dir
+        #       mountPath: /csi
+
+      volumes:
+        - name: socket-dir
+          emptyDir: {}

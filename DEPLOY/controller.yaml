@@ -61,7 +61,7 @@ spec:
 
         - name: csi-msys-driver
           image: my-image
-          #imagePullPolicy: Always
+          imagePullPolicy: Never
           env:
             - name: DRIVER__TYPE
               value: "Controller"

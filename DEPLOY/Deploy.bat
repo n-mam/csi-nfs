@@ -23,7 +23,7 @@ REM kubectl get pods POD_NAME_HERE -o jsonpath='{.spec.containers[*].name}' -n x
 
 REM pod's container logs
 
-REM kubectl logs POD_NAME_HERE -c POD_CONTAINER_NAME_HERE -n xxx
+REM kubectl logs POD_NAME_HERE -c csi-msys-driver -n xxx
 
 REM mount /home/nmam/csi-nfs/ repo into minikube's vm 
 

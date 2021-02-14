@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 project(csi-nfs)
 
 # SET CMAKE_PREFIX_PATH=d:\vcpkg\installed\x64-windows
+# export CMAKE_PREFIX_PATH=~/vcpkg/installed/x64-linux/
 
 find_package(gRPC REQUIRED)
 find_package(Protobuf REQUIRED)
@@ -87,3 +88,10 @@ if (WIN32)
    "/DEBUG /OPT:REF /OPT:ICF"
   )
 endif (WIN32)
+
+add_custom_command(
+  TARGET
+  server
+  POST_BUILD
+  cp ${CMAKE_SOURCE_DIR}/build/server ${CMAKE_SOURCE_DIR}/DEPLOY
+)

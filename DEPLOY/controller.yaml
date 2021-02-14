@@ -63,7 +63,7 @@ spec:
           image: msys-driver-image:latest
           imagePullPolicy: Never
           env:
-            - name: DRIVER__TYPE
+            - name: DRIVER_TYPE
               value: "Controller"
           resources:
             limits:

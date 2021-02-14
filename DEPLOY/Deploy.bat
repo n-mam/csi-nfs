@@ -17,20 +17,19 @@ REM kubectl get rs -n xxx
 
 REM kubectl get pods -n xxx
 
-REM list all pod containers
+REM --- list all containers of a pod
 
 REM kubectl get pods POD_NAME_HERE -o jsonpath='{.spec.containers[*].name}' -n xxx
 
-REM pod's container logs
+REM --- pod's container logs
 
 REM kubectl logs POD_NAME_HERE -c csi-msys-driver -n xxx
 
-REM mount /home/nmam/csi-nfs/ repo into minikube's vm 
-
-REM minikube mount /home/nmam/csi-nfs/:/home/docker/csi-nfs
+REM minikube ssh
+REM delete msys-driver-image:latest using docker rmi <tag>
 
 REM eval $(minikube docker-env)
-REM docker build -t my-image .
+REM docker build -t msys-driver-image .
 REM minikube ssh
 REM docker images my-image
 

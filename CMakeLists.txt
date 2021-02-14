@@ -88,10 +88,3 @@ if (WIN32)
    "/DEBUG /OPT:REF /OPT:ICF"
   )
 endif (WIN32)
-
-add_custom_command(
-  TARGET
-  server
-  POST_BUILD
-  cp ${CMAKE_SOURCE_DIR}/build/server ${CMAKE_SOURCE_DIR}/DEPLOY
-)

@@ -1,5 +1,5 @@
 # docker build 
-FROM alpine:latest
+FROM debian:buster-slim
 WORKDIR /app
 ADD "server" /app
 CMD ["/app/server"]

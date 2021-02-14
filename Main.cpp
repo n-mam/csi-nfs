@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
   std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
 
-  std::cout << "Server listening on " << "0.0.0.0:50051" << "\n";
+  std::cout << "Server listening on " << "0.0.0.0:50051" << std::endl;
 
   server->Wait();
 

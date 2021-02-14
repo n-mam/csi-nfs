@@ -31,4 +31,9 @@ REM mount /home/nmam/csi-nfs/ repo into minikube's vm
 
 minikube mount /home/nmam/csi-nfs/:/home/docker/csi-nfs
 
+REM eval $(minikube docker-env)
+REM docker build -t my-image .
+REM minikube ssh
+REM docker images my-image
+
 ENDLOCAL

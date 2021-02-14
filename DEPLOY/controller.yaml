@@ -59,32 +59,22 @@ spec:
             - name: socket-dir
               mountPath: /csi
 
-        # - name: csi-msys
-        #   image: zetanova/hyperv-csi-driver:1.0.16
-        #   #imagePullPolicy: Always
-        #   lifecycle:
-        #     preStop:
-        #       exec:
-        #         command: ["/bin/sh", "-c", "rm -f /csi/hyperv.sock"]
-        #   env:
-        #     - name: DRIVER__TYPE
-        #       value: "Controller"
-        #     - name: DRIVER__USERNAME
-        #       value: "Administrator"
-        #     - name: DRIVER__DefaultStorage
-        #       value: "hv05"
-        #     - name: CSI_ENDPOINT
-        #       value: /csi/hyperv.sock
-        #   resources:
-        #     limits:
-        #       cpu: 150m
-        #       memory: 320Mi
-        #     requests:
-        #       cpu: 5m
-        #       memory: 224Mi
-        #   volumeMounts:
-        #     - name: socket-dir
-        #       mountPath: /csi
+        - name: csi-msys-driver
+          image: my-image
+          #imagePullPolicy: Always
+          env:
+            - name: DRIVER__TYPE
+              value: "Controller"
+          resources:
+            limits:
+              cpu: 150m
+              memory: 320Mi
+            requests:
+              cpu: 5m
+              memory: 224Mi
+          volumeMounts:
+            - name: socket-dir
+              mountPath: /csi
 
       volumes:
         - name: socket-dir

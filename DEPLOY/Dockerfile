@@ -2,5 +2,5 @@
 FROM alpine:latest
 WORKDIR /app
 ADD "server" /app
-CMD ["server"]
+CMD ["/app/server"]
  

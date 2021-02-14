@@ -60,7 +60,7 @@ spec:
               mountPath: /csi
 
         - name: csi-msys-driver
-          image: my-image
+          image: my-image:latest
           imagePullPolicy: Never
           env:
             - name: DRIVER__TYPE

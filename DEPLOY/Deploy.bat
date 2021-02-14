@@ -3,29 +3,29 @@ SETLOCAL
 
 SET NAMESPACE=xxx
 
-minikube kubectl -- delete namespace %NAMESPACE%
+kubectl delete namespace xxx
 
-minikube kubectl -- apply -f common.yaml
+kubectl apply -f common.yaml
 
-minikube kubectl -- apply -f controller.yaml
+kubectl apply -f controller.yaml
 
-minikube kubectl -- get deploy -n %NAMESPACE%
+kubectl get deploy -n xxx
 
-minikube kubectl -- rollout status deploy/xxx-controller-deployment -n %NAMESPACE%
+kubectl rollout status deploy/xxx-controller-deployment -n xxx
 
-minikube kubectl -- describe deploy/xxx-controller-deployment -n %NAMESPACE%
+kubectl describe deploy/xxx-controller-deployment -n xxx
 
-minikube kubectl -- get rs -n %NAMESPACE%
+kubectl get rs -n xxx
 
-minikube kubectl -- get pods -n %NAMESPACE%
+kubectl get pods -n xxx
 
 REM list all pod containers
 
-minikube kubectl -- get pods POD_NAME_HERE -o jsonpath='{.spec.containers[*].name}' -n %NAMESPACE%
+kubectl get pods POD_NAME_HERE -o jsonpath='{.spec.containers[*].name}' -n xxx
 
 REM pod's container logs
 
-minikube kubectl -- logs POD_NAME_HERE -c POD_CNTAINER_NAME_HERE
+kubectl logs POD_NAME_HERE -c POD_CONTAINER_NAME_HERE -n xxx
 
 REM mount /home/nmam/csi-nfs/ repo into minikube's vm 
 

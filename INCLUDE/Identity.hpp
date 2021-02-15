@@ -20,7 +20,7 @@ class IdentityService : public csi::v1::Identity::Service
       const csi::v1::GetPluginInfoRequest *request,
       csi::v1::GetPluginInfoResponse *response) override
     {
-      std::cout << "[IdentityService] GetPluginInfo" << std::endl;
+      std::cout << "[Identity] GetPluginInfo" << std::endl;
       
       response->set_name("com.msystechnologies.csi.nfs");
       response->set_vendor_version("0.1");
@@ -33,7 +33,7 @@ class IdentityService : public csi::v1::Identity::Service
       const csi::v1::GetPluginCapabilitiesRequest *request,
       csi::v1::GetPluginCapabilitiesResponse *response) override
     {
-      std::cout << "[IdentityService] GetPluginCapabilities" << std::endl;
+      std::cout << "[Identity] GetPluginCapabilities" << std::endl;
       
       auto cap = response->add_capabilities();
       cap->mutable_service()->set_type(csi::v1::PluginCapability_Service_Type_CONTROLLER_SERVICE);
@@ -46,7 +46,7 @@ class IdentityService : public csi::v1::Identity::Service
       const csi::v1::ProbeRequest *request,
       csi::v1::ProbeResponse *response) override
     {
-      std::cout << "[IdentityService] Probe" << std::endl;
+      std::cout << "[Identity] Probe" << std::endl;
       
       response->mutable_ready()->set_value(iReady);
       

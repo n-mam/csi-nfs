@@ -8,6 +8,11 @@
 
 int main(int argc, char *argv[])
 {
+  for(int i = 0; i < argc; i++)
+  {
+    std::cout << argv[i] << std::endl;
+  }
+
   grpc::ServerBuilder builder;
 
   builder.AddListeningPort("unix:///csi/csi.sock", grpc::InsecureServerCredentials());
@@ -22,7 +27,7 @@ int main(int argc, char *argv[])
 
   std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
 
-  std::cout << "Server listening on " << "0.0.0.0:50051" << std::endl;
+  std::cout << "Server listening ... " << std::endl;
 
   server->Wait();
 

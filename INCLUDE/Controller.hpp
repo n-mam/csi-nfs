@@ -79,7 +79,11 @@ class ControllerService : public csi::v1::Controller::Service
       csi::v1::ControllerGetCapabilitiesResponse *response)
     {
       std::cout << "ControllerGetCapabilities" << std::endl;
-      return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "ControllerGetCapabilities");
+
+      auto cap = response->add_capabilities();
+      cap->mutable_rpc()->set_type(csi::v1::ControllerServiceCapability_RPC_Type::ControllerServiceCapability_RPC_Type_CREATE_DELETE_VOLUME);
+
+      return grpc::Status(grpc::StatusCode::OK, "ControllerGetCapabilities");
     }
 
     virtual grpc::Status CreateSnapshot(

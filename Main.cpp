@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 {
   grpc::ServerBuilder builder;
 
-  builder.AddListeningPort("0.0.0.0:50051", grpc::InsecureServerCredentials());
+  builder.AddListeningPort("unix:///csi/csi.sock", grpc::InsecureServerCredentials());
 
   NodeService ns;
   IdentityService is;

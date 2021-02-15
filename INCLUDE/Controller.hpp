@@ -15,6 +15,7 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::CreateVolumeRequest *request,
       csi::v1::CreateVolumeResponse *response)
     {
+      std::cout << "CreateVolume" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "CreateVolume");
     }
 
@@ -23,6 +24,7 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::DeleteVolumeRequest *request,
       csi::v1::DeleteVolumeResponse *response)
     {
+      std::cout << "DeleteVolume" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "DeleteVolume");
     }
 
@@ -31,6 +33,7 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::ControllerPublishVolumeRequest *request,
       csi::v1::ControllerPublishVolumeResponse *response)
     {
+      std::cout << "ControllerPublishVolume" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "ControllerPublishVolume");
     }
 
@@ -39,6 +42,7 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::ControllerUnpublishVolumeRequest *request,
       csi::v1::ControllerUnpublishVolumeResponse *response)
     {
+      std::cout << "ControllerUnpublishVolume" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "ControllerUnpublishVolume");
     }
 
@@ -47,6 +51,7 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::ValidateVolumeCapabilitiesRequest *request,
       csi::v1::ValidateVolumeCapabilitiesResponse *response)
     {
+      std::cout << "ValidateVolumeCapabilities" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "ValidateVolumeCapabilities");
     }
 
@@ -55,6 +60,7 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::ListVolumesRequest *request,
       csi::v1::ListVolumesResponse *response)
     {
+      std::cout << "ListVolumes" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "ListVolumes");
     }
 
@@ -63,6 +69,7 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::GetCapacityRequest *request,
       csi::v1::GetCapacityResponse *response)
     {
+      std::cout << "GetCapacity" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "GetCapacity");
     }
 
@@ -71,6 +78,7 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::ControllerGetCapabilitiesRequest *request,
       csi::v1::ControllerGetCapabilitiesResponse *response)
     {
+      std::cout << "ControllerGetCapabilities" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "ControllerGetCapabilities");
     }
 
@@ -79,6 +87,7 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::CreateSnapshotRequest *request,
       csi::v1::CreateSnapshotResponse *response)
     {
+      std::cout << "CreateSnapshot" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "CreateSnapshot");
     }
 
@@ -87,6 +96,7 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::DeleteSnapshotRequest *request, 
       csi::v1::DeleteSnapshotResponse *response)
     {
+      std::cout << "DeleteSnapshot" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "DeleteSnapshot");
     }
 
@@ -95,14 +105,16 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::ListSnapshotsRequest *request, 
       csi::v1::ListSnapshotsResponse *response)
     {
+      std::cout << "ListSnapshots" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "ListSnapshots");
     }
-    
+
     virtual grpc::Status ControllerExpandVolume(
       grpc::ServerContext *context, 
       const csi::v1::ControllerExpandVolumeRequest *request, 
       csi::v1::ControllerExpandVolumeResponse *response)
     {
+      std::cout << "ControllerExpandVolume" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "ControllerExpandVolume");
     }
 
@@ -111,6 +123,7 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::ControllerGetVolumeRequest *request, 
       csi::v1::ControllerGetVolumeResponse *response)
     {
+      std::cout << "ControllerGetVolume" << std::endl;
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "ControllerGetVolume");
     }
   };

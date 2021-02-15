@@ -26,11 +26,11 @@ class IdentityClient
        
        if (status.ok())
        {
-         std::cout << "name : " << res.name() << ", version : " << res.vendor_version() << "\n";
+         std::cout << "name : " << res.name() << ", version : " << res.vendor_version() << std::endl;
        }
        else
        {
-         std::cout << "GetPluginInfo failed : " << status.error_message() << "\n";
+         std::cout << "GetPluginInfo failed : " << status.error_message() << std::endl;
        }
      }
 
@@ -49,12 +49,12 @@ class IdentityClient
          {
            std::cout << "capabilities : "
                      << "has_service " << cap.has_service() << ", "
-                     << "has_volume_expansion " << cap.has_volume_expansion() << "\n"; 
+                     << "has_volume_expansion " << cap.has_volume_expansion() << std::endl; 
          }
        }
        else
        {
-         std::cout << "Probe failed : " << status.error_message() << "\n";
+         std::cout << "Probe failed : " << status.error_message() << std::endl;
        }
      }
 
@@ -69,11 +69,11 @@ class IdentityClient
 
        if (status.ok())
        {
-         std::cout << "ready : " << res.ready().value() << "\n";
+         std::cout << "ready : " << res.ready().value() << std::endl;
        }
        else
        {
-         std::cout << "Probe failed : " << status.error_message() << "\n";
+         std::cout << "Probe failed : " << status.error_message() << std::endl;
        }
      }
 

@@ -33,6 +33,6 @@ REM docker build -t msys-driver-image .
 REM minikube ssh
 REM docker images my-image
 
-REM  docker run -i msys-driver-image:latest /bin/sh
+REM kubectl exec [pod] -c [container] -n xxx -it -- /bin/sh
 
 ENDLOCAL

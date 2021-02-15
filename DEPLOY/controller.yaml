@@ -65,6 +65,8 @@ spec:
           env:
             - name: DRIVER_TYPE
               value: "Controller"
+            - name: ADDRESS
+              value: /csi/csi.sock
           resources:
             limits:
               cpu: 150m

@@ -46,7 +46,7 @@ class IdentityService : public csi::v1::Identity::Service
       response->mutable_ready()->set_value(iReady);
       return grpc::Status(grpc::StatusCode::OK, "Probe");
     }
-  
+
   protected:
 
     bool iReady = false;

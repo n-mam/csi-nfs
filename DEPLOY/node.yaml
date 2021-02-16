@@ -1,0 +1,53 @@
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: xxx-node-daemonset
+  namespace: xxx
+spec:
+  selector:
+    matchLabels:
+      app: xxx-node-app
+  template:
+    metadata:
+      labels:
+        app: xxx-node-app
+    spec:
+      containers:
+        - name: node-driver-registrar
+          image: k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.0.1
+          args:
+            - --csi-address=/csi/csi.sock
+            - --kubelet-registration-path=/var/lib/kubelet/plugins/csi.msys.plugin/csi.sock
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+            - name: registration-dir
+              mountPath: /registration
+
+        - name: csi-msys-driver
+          image: msys-driver-image:latest
+          imagePullPolicy: Never
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["SYS_ADMIN"]
+            allowPrivilegeEscalation: true
+          args:
+            - "--endpoint=$(CSI_ENDPOINT)"
+          env:
+            - name: CSI_ENDPOINT
+              value: unix:///csi/csi.sock
+          volumeMounts:
+            - name: plugin-dir
+              mountPath: /csi
+
+      volumes:
+        - name: registration-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins_registry
+            type: Directory
+
+        - name: plugin-dir
+          hostPath:
+            path: /var/lib/kubelet/plugins/csi.msys.plugin/
+            type: DirectoryOrCreate

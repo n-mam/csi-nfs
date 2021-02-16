@@ -3,9 +3,9 @@ SETLOCAL
 
 REM kubectl delete namespace xxx
 
-REM kubectl apply -f common.yaml
-
-REM kubectl apply -f controller.yaml
+kubectl apply -f common.yaml
+kubectl apply -f controller.yaml
+kubectl apply -f node.yaml
 
 REM kubectl get deploy -n xxx
 
@@ -19,11 +19,11 @@ REM kubectl get pods -n xxx
 
 REM --- list all containers of a pod
 
-REM kubectl get pods POD_NAME_HERE -o jsonpath='{.spec.containers[*].name}' -n xxx
+REM kubectl get pods [POD] -o jsonpath='{.spec.containers[*].name}' -n xxx
 
 REM --- pod's container logs
 
-REM kubectl logs POD_NAME_HERE -c csi-msys-driver -n xxx
+REM kubectl logs [POD] -c csi-msys-driver -n xxx
 
 REM minikube ssh
 REM delete msys-driver-image:latest using docker rmi <tag>

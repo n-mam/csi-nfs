@@ -10,9 +10,10 @@ class IdentityService : public csi::v1::Identity::Service
 {
   public:
 
-    IdentityService()
+    IdentityService(bool isController)
     {
       iReady = true;
+      iController = isController;
     }
 
     virtual grpc::Status GetPluginInfo(
@@ -35,9 +36,12 @@ class IdentityService : public csi::v1::Identity::Service
     {
       std::cout << "[Identity] GetPluginCapabilities" << std::endl;
       
-      auto cap = response->add_capabilities();
-      cap->mutable_service()->set_type(csi::v1::PluginCapability_Service_Type_CONTROLLER_SERVICE);
-      
+      if (iController)
+      {
+        auto cap = response->add_capabilities();
+        cap->mutable_service()->set_type(csi::v1::PluginCapability_Service_Type_CONTROLLER_SERVICE);
+      }
+
       return grpc::Status(grpc::StatusCode::OK, "GetPluginCapabilities");
     }
 
@@ -56,6 +60,8 @@ class IdentityService : public csi::v1::Identity::Service
   protected:
 
     bool iReady = false;
+
+    bool iController = false;
 
     std::string iName;
 

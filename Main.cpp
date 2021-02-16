@@ -13,13 +13,20 @@ int main(int argc, char *argv[])
     std::cout << argv[i] << std::endl;
   }
 
+  bool isController = false;
+
+  if (argc == 3)
+  {
+    isController = true;
+  }
+
   grpc::ServerBuilder builder;
 
   builder.AddListeningPort("unix:///csi/csi.sock", grpc::InsecureServerCredentials());
 
   NodeService ns;
-  IdentityService is;
   ControllerService cs;
+  IdentityService is(isController);
 
   builder.RegisterService(&is);
   builder.RegisterService(&ns);

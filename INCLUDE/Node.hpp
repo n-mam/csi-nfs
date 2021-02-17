@@ -10,6 +10,11 @@ class NodeService : public csi::v1::Node::Service
 {
   public:
 
+    NodeService(const std::string& nodeID)
+    {
+      iNodeID = nodeID;
+    }
+
     virtual grpc::Status NodeStageVolume(
       grpc::ServerContext *context,
       const csi::v1::NodeStageVolumeRequest *request,
@@ -78,9 +83,16 @@ class NodeService : public csi::v1::Node::Service
       const csi::v1::NodeGetInfoRequest *request,
       csi::v1::NodeGetInfoResponse *response) override
     {
-      std::cout << "[Node] NodeGetInfo" << std::endl;
-      return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "NodeGetInfo");
+      std::cout << "[Node] NodeGetInfo returning nodeID : " << iNodeID << std::endl;
+
+      response->mutable_node_id()->assign(iNodeID);
+
+      return grpc::Status(grpc::StatusCode::OK, "NodeGetInfo");
     }
+  
+  protected:
+
+    std::string iNodeID;
 };
 
 

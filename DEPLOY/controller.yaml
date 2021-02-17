@@ -62,7 +62,8 @@ spec:
         - name: csi-msys-driver
           image: msys-driver-image:latest
           imagePullPolicy: Never
-          args: ["controller"]
+          args:
+            - "--controller=true"
           env:
             - name: CSI_ENDPOINT
               value: /csi/csi.sock

@@ -7,6 +7,7 @@ project(csi-nfs)
 
 find_package(gRPC REQUIRED)
 find_package(Protobuf REQUIRED)
+find_package(gflags REQUIRED)
 
 # Protbuf generated
 
@@ -73,8 +74,8 @@ if (WIN32)
   target_link_libraries(server Ws2_32.lib)
   target_link_libraries(Test Ws2_32.lib)
 else()
-  target_link_libraries(server PRIVATE gRPC::gpr gRPC::grpc gRPC::grpc++ gRPC::grpc++_alts)
-  target_link_libraries(Test PRIVATE gRPC::gpr gRPC::grpc gRPC::grpc++ gRPC::grpc++_alts)
+  target_link_libraries(server PRIVATE gRPC::gpr gRPC::grpc gRPC::grpc++ gRPC::grpc++_alts gflags_shared gflags::gflags_shared)
+  target_link_libraries(Test PRIVATE gRPC::gpr gRPC::grpc gRPC::grpc++ gRPC::grpc++_alts gflags_shared gflags::gflags_shared)
 endif (WIN32)
 
 if (WIN32)

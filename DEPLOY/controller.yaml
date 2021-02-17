@@ -64,9 +64,10 @@ spec:
           imagePullPolicy: Never
           args:
             - "--controller=true"
+            - "--endpoint=$(CSI_ENDPOINT)"
           env:
             - name: CSI_ENDPOINT
-              value: /csi/csi.sock
+              value: unix:///csi/csi.sock
           resources:
             limits:
               cpu: 150m

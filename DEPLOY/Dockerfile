@@ -2,5 +2,5 @@
 FROM debian:buster-slim
 WORKDIR /app
 ADD "server" /app
-CMD ["/app/server"]
+ENTRYPOINT ["/app/server"]
  

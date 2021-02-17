@@ -28,8 +28,9 @@ REM kubectl logs [POD] -c csi-msys-driver -n xxx
 REM minikube ssh
 REM delete msys-driver-image:latest using docker rmi <tag>
 
-REM eval $(minikube docker-env)
-REM docker build -t msys-driver-image .
+eval $(minikube docker-env)
+docker build -t msys-driver-image .
+
 REM minikube ssh
 REM docker images my-image
 

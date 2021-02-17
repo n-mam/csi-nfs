@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[])
 {
-  std::cout << "argc : " << argc << std::endl;
+  std::cout << std::string(argv[0]) << " " << argc << std::endl;
 
   bool isController = false;
 

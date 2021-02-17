@@ -8,11 +8,14 @@
 
 int main(int argc, char *argv[])
 {
-  std::cout << std::string(argv[0]) << " " << argc << std::endl;
+  for (int i = 0; i < argc; i++)
+  {
+    std::cout << argv[i] << std::endl;
+  }
 
   bool isController = false;
 
-  if (argc == 3)
+  if (argc == 2)
   {
     isController = true;
   }
@@ -31,7 +34,7 @@ int main(int argc, char *argv[])
 
   std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
 
-  std::cout << "Server listening ... " << std::endl;
+  std::cout << "server listening ... " << std::endl;
 
   server->Wait();
 

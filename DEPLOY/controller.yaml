@@ -62,11 +62,10 @@ spec:
         - name: csi-msys-driver
           image: msys-driver-image:latest
           imagePullPolicy: Never
+          args: ["controller"]
           env:
             - name: CSI_ENDPOINT
               value: /csi/csi.sock
-            - name: SERVICE_TYPE
-              value: "Controller"
           resources:
             limits:
               cpu: 150m

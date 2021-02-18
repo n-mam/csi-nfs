@@ -7,6 +7,8 @@ kubectl apply -f common.yaml
 kubectl apply -f controller.yaml
 kubectl apply -f node.yaml
 
+kubectl apply -f nfs-server.yaml
+
 REM kubectl get deploy -n xxx
 
 REM kubectl rollout status deploy/xxx-controller-deployment -n xxx

@@ -51,9 +51,9 @@ kubectl get pv
 kubectl get pvc
 kubectl get pods
 
-kubectl patch pv pv-nfs -n xxx -p '{"metadata":{"finalizers":null}}'
-kubectl patch pvc pvc-nfs-static -n xxx -p '{"metadata":{"finalizers":null}}'
+kubectl patch pv pv-nfs -n -p '{"metadata":{"finalizers":null}}'
+kubectl patch pvc pvc-nfs-static -p '{"metadata":{"finalizers":null}}'
 
 kubectl delete pod my-test-pod
-kubectl delete pv pv-nfs -n xxx
-kubectl delete pvc pvc-nfs-static -n xxx
+kubectl delete pv pv-nfs
+kubectl delete pvc pvc-nfs-static

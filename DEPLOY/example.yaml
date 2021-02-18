@@ -3,7 +3,6 @@ kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
   name: nfs-sc
-  namespace: xxx
 provisioner: nfs.csi.msys.com 
 parameters:
   server: nfs-server.default.svc.cluster.local

@@ -44,7 +44,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: xxx-sa
-    namespace: kube-system
+    namespace: xxx
 roleRef:
   kind: ClusterRole
   name: nfs-external-provisioner-role

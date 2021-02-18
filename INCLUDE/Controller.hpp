@@ -80,8 +80,11 @@ class ControllerService : public csi::v1::Controller::Service
     {
       std::cout << "[Controller] ControllerGetCapabilities" << std::endl;
 
-      auto cap = response->add_capabilities();
-      cap->mutable_rpc()->set_type(csi::v1::ControllerServiceCapability_RPC_Type::ControllerServiceCapability_RPC_Type_CREATE_DELETE_VOLUME);
+      auto cap1 = response->add_capabilities();
+      cap1->mutable_rpc()->set_type(csi::v1::ControllerServiceCapability_RPC_Type::ControllerServiceCapability_RPC_Type_CREATE_DELETE_VOLUME);
+
+      auto cap2= response->add_capabilities();
+      cap2->mutable_rpc()->set_type(csi::v1::ControllerServiceCapability_RPC_Type::ControllerServiceCapability_RPC_Type_PUBLISH_UNPUBLISH_VOLUME);
 
       return grpc::Status(grpc::StatusCode::OK, "ControllerGetCapabilities");
     }

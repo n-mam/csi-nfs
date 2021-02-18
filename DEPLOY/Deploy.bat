@@ -6,8 +6,11 @@ REM kubectl delete namespace xxx
 kubectl apply -f common.yaml
 kubectl apply -f controller.yaml
 kubectl apply -f node.yaml
-
 kubectl apply -f nfs-server.yaml
+
+REM During the nfs-server.yaml deployment, a new service nfs-server will 
+REM be created which exposes the NFS server endpoint nfs-server.default.svc.cluster.local 
+REM and the share path /. You can specify PersistentVolume or StorageClass using these information.
 
 REM kubectl get deploy -n xxx
 

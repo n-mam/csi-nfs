@@ -23,7 +23,7 @@ class IdentityService : public csi::v1::Identity::Service
     {
       std::cout << "[Identity] GetPluginInfo" << std::endl;
       
-      response->set_name("com.msys.csi.nfs");
+      response->set_name("nfs.csi.msys.com"); //com.msys.csi.nfs
       response->set_vendor_version("0.1");
       
       return grpc::Status(grpc::StatusCode::OK, "GetPluginInfo");

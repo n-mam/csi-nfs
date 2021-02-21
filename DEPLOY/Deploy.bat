@@ -3,7 +3,7 @@ SETLOCAL
 
 REM kubectl delete namespace xxx
 
-kubectl apply -f common.yaml
+kubectl apply -f rbac.yaml
 kubectl apply -f controller.yaml
 kubectl apply -f node.yaml
 kubectl get pods -n xxx
@@ -28,7 +28,7 @@ docker build -t msys-driver-image .
 
 REM minikube ssh
 REM docker images my-image
-REM kubectl exec [pod] -c [container] -n xxx -it -- /bin/sh
+REM kubectl exec [pod] -c [con] -n xxx -it -- /bin/sh
 
 ENDLOCAL
 
@@ -47,5 +47,5 @@ kubectl delete pvc pvc-nfs-dynamic
 REM setup nfs server on the minikube vm and export
 REM the root share off /home/nmam/nfs_root/
 
-mount -o nolock 192.168.43.162:/mnt/nfs_root  /mnt/nfs_mount
+mount -o nolock 192.168.43.162:/home/nmam/nfs_root/ /mnt/nfs_mount
 umount -f -l /mnt/nfs_mount/

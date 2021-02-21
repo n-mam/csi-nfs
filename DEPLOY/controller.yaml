@@ -64,6 +64,8 @@ spec:
         - name: csi-msys-driver
           image: msys-driver-image:latest
           imagePullPolicy: Never
+          securityContext:
+            privileged: true
           args:
             - "--controller=true"
             - "--endpoint=$(CSI_ENDPOINT)"

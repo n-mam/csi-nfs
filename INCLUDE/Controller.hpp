@@ -16,6 +16,13 @@ class ControllerService : public csi::v1::Controller::Service
       csi::v1::CreateVolumeResponse *response)
     {
       std::cout << "[Controller] CreateVolume" << std::endl;
+
+      if (!request->name().size())
+      {
+        std::cout << "[Controller] CreateVolume : name must be provided" << std::endl;
+        return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "CreateVolume");
+      }
+
       return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "CreateVolume");
     }
 

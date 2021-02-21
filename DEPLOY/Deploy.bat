@@ -43,3 +43,7 @@ kubectl delete pod my-test-pod
 kubectl delete pvc pvc-nfs-static
 kubectl delete pv pv-nfs
 kubectl delete pvc pvc-nfs-dynamic
+
+
+mount 192.168.43.162:/mnt/nfs_root  /mnt/nfs_share
+umount -f -l /mnt/nfs_mount/

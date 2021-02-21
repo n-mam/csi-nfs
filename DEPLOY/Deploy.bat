@@ -44,6 +44,8 @@ kubectl delete pvc pvc-nfs-static
 kubectl delete pv pv-nfs
 kubectl delete pvc pvc-nfs-dynamic
 
+REM setup nfs server on the minikube vm and export
+REM the root share off /home/nmam/nfs_root/
 
-mount 192.168.43.162:/mnt/nfs_root  /mnt/nfs_share
+mount -o nolock 192.168.43.162:/mnt/nfs_root  /mnt/nfs_mount
 umount -f -l /mnt/nfs_mount/

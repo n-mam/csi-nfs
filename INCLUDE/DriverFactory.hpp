@@ -9,20 +9,9 @@
 #include <memory>
 #include <string>
 
-auto make_driver(const google::protobuf::Map<std::string, std::string> &params)
+auto make_driver(const std::string& type)
 {
-  std::string type;
   SPCBaseDriver driver;
-
-  try
-  {
-    type = params.at("driver");
-  }
-  catch(const std::exception& e)
-  {
-    std::cout << "make_driver exception : " << e.what() << std::endl;
-    return driver;
-  }
 
   if (type == "nfs")
   {

@@ -9,19 +9,24 @@
 #include <memory>
 #include <string>
 
+struct NFSVolume : public BaseVolume
+{
+  std::string server;
+  std::string baseDir;
+};
+
 class CNFSDriver : public CBaseDriver
 {
   public:
 
-    virtual bool CreateVolume(const std::string& ssname, const google::protobuf::Map<std::string, std::string> &parameters) override
+    virtual bool CreateVolume(const csi::v1::CreateVolumeRequest *request, csi::v1::CreateVolumeResponse *response) override
     {
-      std::string share;
-      std::string server;
+      auto nfsVol = std::make_shared<NFSVolume>();
 
       try
       {
-        server = parameters.at("server");
-        share = parameters.at("share");
+        nfsVol->server = request->parameters().at("server");
+        nfsVol->baseDir = request->parameters().at("share");
       }
       catch(const std::exception& e)
       {
@@ -29,22 +34,54 @@ class CNFSDriver : public CBaseDriver
         return false;
       }
 
-      std::string cmd;
+      // mount server share
 
-      // mount server's share
-      cmd = "mount -o nolock " + server + ":" + share + " /tmp";
+      std::string cmd = "mount -o nolock " + nfsVol->server + ":" + nfsVol->baseDir + " " + "/tmp";
+
       int rc = system(cmd.c_str());
+      
       std::cout << cmd << " : " << rc << std::endl;
 
-      // create storage space subdirectory
-      if (rc == 0)
+      if (rc != 0)
       {
-        cmd = "mkdir –m 777 " + "/tmp/"s + ssname;
-        rc = system(cmd.c_str());
-        std::cout << cmd << " : " << rc << std::endl;
+        std::cout << "Failed to mount" << std::endl;
+        return false;
       }
 
-      return ((rc == 0) ? true : false);
+      // create subdirectory
+
+      cmd = "mkdir –m 777 " + "/tmp/"s + nfsVol->name;
+
+      rc = system(cmd.c_str());
+
+      std::cout << cmd << " : " << rc << std::endl;
+
+      if (rc != 0)
+      {
+        std::cout << "Failed to create volume sub-directory" << std::endl;
+        return false;
+      }
+
+      nfsVol->name = request->name();
+
+      nfsVol->id = nfsVol->server + "/" + nfsVol->baseDir + "/" + nfsVol->name;
+
+      nfsVol->capacity_bytes = request->capacity_range().required_bytes();
+
+      iVolumeMap[nfsVol->name] = nfsVol;
+
+      auto csiVol = response->mutable_volume();
+
+      csiVol->set_volume_id(nfsVol->id);
+
+      csiVol->set_capacity_bytes(nfsVol->capacity_bytes);
+
+      auto ctx = csiVol->mutable_volume_context();
+
+      (*ctx)["server"] = nfsVol->server;
+      (*ctx)["baseDir"] = nfsVol->baseDir;
+
+      return true;
     }
 
 

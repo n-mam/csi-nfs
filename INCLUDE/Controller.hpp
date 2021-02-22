@@ -18,49 +18,45 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::CreateVolumeRequest *request,
       csi::v1::CreateVolumeResponse *response)
     {
-      std::cout << "ControllerService::CreateVolume" << std::endl;
+      std::cout << "CS CreateVolume" << std::endl;
 
-      SPCBaseDriver driver = nullptr;
-
-      auto& ssname = request->name();
-      auto& params = request->parameters();
-
-      grpc::StatusCode fRet = grpc::StatusCode::INVALID_ARGUMENT;
-
-      if (!ssname.size())
+      if (!request->name().size())
       {
-        std::cout << "error : storage space name missing" << std::endl;
-        goto _end;
+        std::cout << "CS error : name missing" << std::endl;
+        return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "CreateVolume");
       }
 
-      if (params.empty())
+      if (request->parameters().empty())
       {
-        std::cout << "error : parameters empty" << std::endl;
-        goto _end;
+        std::cout << "CS error : parameters empty" << std::endl;
+        return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "CreateVolume");
       }
 
-      fRet = grpc::StatusCode::INTERNAL;
+      std::string type;
 
-      driver = make_driver(params);
+      try
+      {
+        type = request->parameters().at("type");
+      }
+      catch(const std::exception& e)
+      {
+        std::cout << "CS error : type param missing : " << std::endl;
+        return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "CreateVolume");
+      }
+
+      auto driver = make_driver(type);
 
       if (driver)
       {
-        auto rc = driver->CreateVolume(ssname, params);
+        auto rc = driver->CreateVolume(request, response);
 
         if (rc)
         {
-          std::cout << "driver->CreateVolume successful" << std::endl;
-          fRet = grpc::StatusCode::OK;
-        }
-        else
-        {
-          std::cout << "driver->CreateVolume failed" << std::endl;
+          return grpc::Status(grpc::StatusCode::OK, "CreateVolume");
         }
       }
 
-      _end:
-
-      return grpc::Status(fRet, "CreateVolume--");      
+      return grpc::Status(grpc::StatusCode::INTERNAL, "CreateVolume");
     }
 
     virtual grpc::Status DeleteVolume(

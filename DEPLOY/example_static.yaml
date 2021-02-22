@@ -17,7 +17,7 @@ spec:
     readOnly: false
     volumeHandle: unique-volumeid  # make sure it's a unique id in the cluster
     volumeAttributes:
-      server: nfs-server.default.svc.cluster.local
+      server: 192.168.43.162
       share: /
 
 ---

@@ -49,13 +49,18 @@ class ControllerService : public csi::v1::Controller::Service
 
         if (rc)
         {
+          std::cout << "driver->CreateVolume successful" << std::endl;
           fRet = grpc::StatusCode::OK;
+        }
+        else
+        {
+          std::cout << "driver->CreateVolume failed" << std::endl;
         }
       }
 
       _end:
 
-      return grpc::Status(fRet, "CreateVolume");      
+      return grpc::Status(fRet, "CreateVolume--");      
     }
 
     virtual grpc::Status DeleteVolume(

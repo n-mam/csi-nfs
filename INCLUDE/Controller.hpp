@@ -4,6 +4,9 @@
 #include <csi.pb.h>
 #include <csi.grpc.pb.h>
 
+#include <DriverFactory.hpp>
+
+#include <string>
 #include <iostream>
 
 class ControllerService : public csi::v1::Controller::Service
@@ -15,15 +18,44 @@ class ControllerService : public csi::v1::Controller::Service
       const csi::v1::CreateVolumeRequest *request,
       csi::v1::CreateVolumeResponse *response)
     {
-      std::cout << "[Controller] CreateVolume" << std::endl;
+      std::cout << "ControllerService::CreateVolume" << std::endl;
 
-      if (!request->name().size())
+      SPCBaseDriver driver = nullptr;
+
+      auto& ssname = request->name();
+      auto& params = request->parameters();
+
+      grpc::StatusCode fRet = grpc::StatusCode::INVALID_ARGUMENT;
+
+      if (!ssname.size())
       {
-        std::cout << "[Controller] CreateVolume : name must be provided" << std::endl;
-        return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, "CreateVolume");
+        std::cout << "error : storage space name missing" << std::endl;
+        goto _end;
       }
 
-      return grpc::Status(grpc::StatusCode::UNIMPLEMENTED, "CreateVolume");
+      if (params.empty())
+      {
+        std::cout << "error : parameters empty" << std::endl;
+        goto _end;
+      }
+
+      fRet = grpc::StatusCode::INTERNAL;
+
+      driver = make_driver(params);
+
+      if (driver)
+      {
+        auto rc = driver->CreateVolume(ssname, params);
+
+        if (rc)
+        {
+          fRet = grpc::StatusCode::OK;
+        }
+      }
+
+      _end:
+
+      return grpc::Status(fRet, "CreateVolume");      
     }
 
     virtual grpc::Status DeleteVolume(

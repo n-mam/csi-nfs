@@ -17,8 +17,8 @@ spec:
     readOnly: false
     volumeHandle: unique-volumeid  # make sure it's a unique id in the cluster
     volumeAttributes:
-      server: 192.168.43.162
-      share: /
+      server: 192.168.1.104
+      share: /home/nmam/nfs_root/
 
 ---
 kind: PersistentVolumeClaim

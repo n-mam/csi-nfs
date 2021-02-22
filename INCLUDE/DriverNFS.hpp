@@ -15,8 +15,6 @@ class CNFSDriver : public CBaseDriver
 
     virtual bool CreateVolume(const std::string& ssname, const google::protobuf::Map<std::string, std::string> &parameters) override
     {
-      bool fRet = false;
-
       std::string share;
       std::string server;
 
@@ -28,22 +26,25 @@ class CNFSDriver : public CBaseDriver
       catch(const std::exception& e)
       {
         std::cout << "CNFSDriver::CreateVolume exception : " << e.what() << std::endl;
-        return fRet;
+        return false;
       }
 
       std::string cmd;
 
-      // mount the server's share
+      // mount server's share
       cmd = "mount -o nolock " + server + ":" + share + " /tmp";
       int rc = system(cmd.c_str());
       std::cout << cmd << " : " << rc << std::endl;
 
-      // create storage space name subdirectory
-      cmd = "mkdir –m777 " + "/tmp/"s + ssname;
-      rc = system(cmd.c_str());
-      std::cout << cmd << " : " << rc << std::endl;
+      // create storage space subdirectory
+      if (rc == 0)
+      {
+        cmd = "mkdir –m 777 " + "/tmp/"s + ssname;
+        rc = system(cmd.c_str());
+        std::cout << cmd << " : " << rc << std::endl;
+      }
 
-      return fRet;
+      return !rc;
     }
 
 

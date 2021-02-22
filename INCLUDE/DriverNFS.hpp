@@ -44,7 +44,7 @@ class CNFSDriver : public CBaseDriver
         std::cout << cmd << " : " << rc << std::endl;
       }
 
-      return !rc;
+      return rc == 0 ? true : false;
     }
 
 

@@ -39,10 +39,13 @@ kubectl get pods
 kubectl patch pv pv-nfs -p '{"metadata":{"finalizers":null}}'
 kubectl patch pvc pvc-nfs-static -p '{"metadata":{"finalizers":null}}'
 
-kubectl delete pod my-test-pod
+kubectl delete namespace xxx
+kubectl delete sc nfs-sc
+kubectl delete pod my-pod
 kubectl delete pvc pvc-nfs-static
 kubectl delete pv pv-nfs
 kubectl delete pvc pvc-nfs-dynamic
+
 
 REM setup nfs server on the minikube vm and export
 REM the root share off /home/nmam/nfs_root/

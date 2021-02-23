@@ -25,6 +25,7 @@ class CNFSDriver : public CBaseDriver
 
       try
       {
+        nfsVol->name = request->name();
         nfsVol->server = request->parameters().at("server");
         nfsVol->baseDir = request->parameters().at("share");
       }
@@ -61,8 +62,6 @@ class CNFSDriver : public CBaseDriver
         std::cout << "Failed to create volume sub-directory" << std::endl;
         return false;
       }
-
-      nfsVol->name = request->name();
 
       nfsVol->id = nfsVol->server + "/" + nfsVol->baseDir + "/" + nfsVol->name;
 

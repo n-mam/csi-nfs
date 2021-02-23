@@ -12,6 +12,7 @@ using namespace std::string_literals;
 
 struct BaseVolume
 {
+  virtual ~BaseVolume(){}
   std::string id;
   std::string name;
   uint64_t capacity_bytes;

@@ -11,6 +11,7 @@
 
 struct NFSVolume : public BaseVolume
 {
+  virtual ~NFSVolume(){}
   std::string server;
   std::string baseDir;
 };
@@ -21,53 +22,64 @@ class CNFSDriver : public CBaseDriver
 
     virtual bool CreateVolume(const csi::v1::CreateVolumeRequest *request, csi::v1::CreateVolumeResponse *response) override
     {
-      auto nfsVol = std::make_shared<NFSVolume>();
+      auto nfsVol = std::dynamic_pointer_cast<NFSVolume>(GetVolume(request->name()));
 
-      try
+      if (nfsVol)
       {
-        nfsVol->name = request->name();
-        nfsVol->server = request->parameters().at("server");
-        nfsVol->baseDir = request->parameters().at("share");
+        std::cout << "CNFSDriver::CreateVolume returning existing volume" << std::endl;
       }
-      catch(const std::exception& e)
+      else
       {
-        std::cout << "CNFSDriver::CreateVolume exception : " << e.what() << std::endl;
-        return false;
-      }
+        nfsVol = std::make_shared<NFSVolume>();
 
-      // mount server share
+        try
+        {
+          nfsVol->name = request->name();
+          nfsVol->server = request->parameters().at("server");
+          nfsVol->baseDir = request->parameters().at("share");
+        }
+        catch(const std::exception& e)
+        {
+          std::cout << "CNFSDriver::CreateVolume : " << e.what() << std::endl;
+          return false;
+        }
 
-      std::string cmd = "mount -o nolock " + nfsVol->server + ":" + nfsVol->baseDir + " " + "/tmp";
+        // mount server share
 
-      int rc = system(cmd.c_str());
+        std::string cmd = "mount -o nolock " + nfsVol->server + ":" + nfsVol->baseDir + " " + "/tmp";
+
+        int rc = system(cmd.c_str());
       
-      std::cout << cmd << " : " << rc << std::endl;
+        std::cout << cmd << " : " << rc << std::endl;
 
-      if (rc != 0)
-      {
-        std::cout << "Failed to mount" << std::endl;
-        return false;
+        if (rc != 0)
+        {
+          std::cout << "Failed to mount" << std::endl;
+          return false;
+        }
+
+        // create subdirectory
+
+        cmd = "mkdir –m 777 " + "/tmp/"s + nfsVol->name;
+
+        rc = system(cmd.c_str());
+
+        std::cout << cmd << " : " << rc << std::endl;
+
+        if (rc != 0)
+        {
+          std::cout << "Failed to create volume sub-directory" << std::endl;
+          system(std::string("umount -f -l /tmp").c_str());
+          return false;
+        }
+
+        nfsVol->id = "[" + nfsVol->server + "][" + nfsVol->baseDir + "][" + nfsVol->name + "]";
+
+        nfsVol->capacity_bytes = request->capacity_range().required_bytes();
+
+        iVolumeMap[nfsVol->id] = nfsVol;
+        iVolumeMap[nfsVol->name] = nfsVol;
       }
-
-      // create subdirectory
-
-      cmd = "mkdir –m 777 " + "/tmp/"s + nfsVol->name;
-
-      rc = system(cmd.c_str());
-
-      std::cout << cmd << " : " << rc << std::endl;
-
-      if (rc != 0)
-      {
-        std::cout << "Failed to create volume sub-directory" << std::endl;
-        return false;
-      }
-
-      nfsVol->id = nfsVol->server + "/" + nfsVol->baseDir + "/" + nfsVol->name;
-
-      nfsVol->capacity_bytes = request->capacity_range().required_bytes();
-
-      iVolumeMap[nfsVol->name] = nfsVol;
 
       auto csiVol = response->mutable_volume();
 
